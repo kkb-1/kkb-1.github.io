@@ -76,6 +76,238 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-如何快速上手一个项目（后端）" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2025/04/04/%E5%A6%82%E4%BD%95%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B%E4%B8%80%E4%B8%AA%E9%A1%B9%E7%9B%AE%EF%BC%88%E5%90%8E%E7%AB%AF%EF%BC%89/" class="article-date">
+  <time class="dt-published" datetime="2025-04-04T14:38:53.000Z" itemprop="datePublished">2025-04-04</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2025/04/04/%E5%A6%82%E4%BD%95%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B%E4%B8%80%E4%B8%AA%E9%A1%B9%E7%9B%AE%EF%BC%88%E5%90%8E%E7%AB%AF%EF%BC%89/">如何快速上手一个项目（后端）</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <ol>
+<li>要项目拉取权限<br>这一点虽然很废话，但是你刚来就敢主动找 mt 要项目不？</li>
+<li>有没有开发规范和接口文档？<br>问 mt 要一个看，如果没有那也没事，有的话会更方便你后续开发</li>
+<li>寻找 main</li>
+</ol>
+<ul>
+<li>main 是运行代码的入口，只有找到了它，你才能开始后续的操作</li>
+<li>一般来说 main 中会包含：<ul>
+<li>配置初始化</li>
+<li>定时任务启动（当然，一般一个已经稳定的项目，它的定时任务是分离出去的）</li>
+<li>创建 web 服务器</li>
+</ul>
+</li>
+</ul>
+<ol start="4">
+<li>快速熟悉项目代码风格</li>
+</ol>
+<ul>
+<li>先寻找 router ，在 router 中寻找一个你认为分离得比较成功的路由小模块</li>
+<li>看路由写法</li>
+<li>随机找一个接口进去看</li>
+<li>如果你有开发规范文档，那么就可以结合着文档了解他们的接口名、函数名、变量名、结构体名这些命名规范</li>
+<li>看它是怎么使用 log 、 db 和 cache 的</li>
+<li>如何处理错误，错误应该如何构建</li>
+<li>常量是放在哪里的？</li>
+<li>好了，现在回过头来看一下，你一路追下来的文件的文件夹层是怎么个分布法（恭喜，你已经会写一个符合团队风格的接口了）</li>
+<li>寻找 config ，你只有一个任务，它是怎么读配置的</li>
+</ul>
+<ol start="5">
+<li>同步业务信息</li>
+</ol>
+<ul>
+<li>直接看 git 提交记录，等同于爬楼看聊天记录一样，如果前者的 commit 写得正常点，你就能快速看懂它在干嘛</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2025/04/04/%E5%A6%82%E4%BD%95%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B%E4%B8%80%E4%B8%AA%E9%A1%B9%E7%9B%AE%EF%BC%88%E5%90%8E%E7%AB%AF%EF%BC%89/" data-id="cm92w4yzj00032ekdg37bc144" data-title="如何快速上手一个项目（后端）" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/backend/" rel="tag">backend</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-第三方支付接入-stripe为例" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2025/04/04/%E7%AC%AC%E4%B8%89%E6%96%B9%E6%94%AF%E4%BB%98%E6%8E%A5%E5%85%A5-stripe%E4%B8%BA%E4%BE%8B/" class="article-date">
+  <time class="dt-published" datetime="2025-04-04T14:37:39.000Z" itemprop="datePublished">2025-04-04</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2025/04/04/%E7%AC%AC%E4%B8%89%E6%96%B9%E6%94%AF%E4%BB%98%E6%8E%A5%E5%85%A5-stripe%E4%B8%BA%E4%BE%8B/">第三方支付接入(stripe为例)</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <ol>
+<li>开启交易会话</li>
+<li>使用平台提供的私钥，向平台的创建交易会话的接口发起请求，生成一个交易链接，需要提供价格ID、商品数量、成功支付重定向链接、取消支付重定向链接等自定义参数</li>
+<li>价格ID：价格在stripe中是一个概念实体，比如你有一个VIP服务商品，可以一次性开通一个月，也可以连续包月，那这个商品就有两个价格了，每个价格的单价与结算方式是不一样的，同时每个价格都有唯一的ID，即价格ID</li>
+<li>事件监听<br>【背景】用户的支付是在第三方平台完成的，对于我们服务端来说是无感知的，即你无法直接得知用户是否付完钱、哪个用户付了哪一笔钱。所以你需要向第三方平台订阅这个消息，这个订阅也叫做事件监听</li>
+<li>创建服务端事件回调接口：当第三方平台想要向服务端发送消息时，就会把消息发送到事件回调接口，事件回调接口接收消息并正确处理消息（包括：将订单状态转为成功支付）</li>
+<li>注册第三方事件监听：在第三方注册自己的回调接口以及需要触发回调的事件类型</li>
+<li>事件成功监听：第三方与服务端会约定一个规则来确认是否服务端成功接收并处理事件，例如服务端成功接收并处理事件就返回200状态码</li>
+<li>事件重发行为：由于网络环境复杂，不能确保发一次消息就能成功，所以一般第三方会有不断重发的行为逻辑，知道得到服务端的确认（例如：200状态码）</li>
+<li>事件监听的不可信：不论是网络问题还是第三方平台服务崩溃问题，都有可能导致消息发送失败，并且支付可能有延迟完成的情况（比如银行走流程确认转帐什么的），所以第三方支付一般不保证事件实时发送给服务端</li>
+<li>事件鉴权：与第三方约定好一个鉴权机制，确保请求事件监听回调接口的是第三方</li>
+<li>最终方案</li>
+<li>发起交易会话的同时，生成一个订单ID，与会话ID结合加密生成一个新ID</li>
+<li>支付成功重定向的网址拿会话ID请求事件回调接口，事件回调接口发现无法通过strip的鉴权，认为是重定向的请求，此时向strip发起请求确认交易会话状态</li>
+<li>为了防止支付成功并重定向那一刻服务端崩溃，以事件监听作为兜底机制</li>
+<li>strip请求事件回调接口，通过strip的鉴权，可以信任strip发来的事件状态，也可以不信任，重新向strip发起请求确认交易会话状态</li>
+<li>总体采用状态机模式</li>
+<li>确认订单状态，完成订单</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2025/04/04/%E7%AC%AC%E4%B8%89%E6%96%B9%E6%94%AF%E4%BB%98%E6%8E%A5%E5%85%A5-stripe%E4%B8%BA%E4%BE%8B/" data-id="cm92w4yzj00052ekdgrab2wr8" data-title="第三方支付接入(stripe为例)" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/backend/" rel="tag">backend</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-docker-文件系统" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2025/04/04/docker-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" class="article-date">
+  <time class="dt-published" datetime="2025-04-04T14:34:47.000Z" itemprop="datePublished">2025-04-04</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2025/04/04/docker-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/">docker 文件系统</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>联合文件系统</p>
+</blockquote>
+<p>联合文件系统（Union File System）UnionFS是docker制作镜像和容器文件的主要技术。通过联合文件系统，可以将多个路径挂载到同一个挂载点上，实现多个path的合并操作（上层同名文件会将下层文件覆盖），最后通过挂载点想上层应用&#x2F;用户呈现一个合并之后的视图，联合文件系统有多种实现，ubuntu采用AUFS实现，centos采用overlay&#x2F;overlay2来实现。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2025/04/04/docker-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" data-id="cm92w4yzi00012ekd592na202" data-title="docker 文件系统" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/" rel="tag">docker</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-docker-pull-断点续传" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2025/04/04/docker-pull-%E6%96%AD%E7%82%B9%E7%BB%AD%E4%BC%A0/" class="article-date">
+  <time class="dt-published" datetime="2025-04-04T14:34:39.000Z" itemprop="datePublished">2025-04-04</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2025/04/04/docker-pull-%E6%96%AD%E7%82%B9%E7%BB%AD%E4%BC%A0/">docker pull 断点续传</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>随着技术和业务不断迭代，镜像层不断叠加，会出现非常大的镜像，以默认的docker配置拉取的话，网络一旦波动就会前功尽弃，这其实是非常灾难性的情况</li>
+<li>docker可以通过在配置文件中添加👇的配置内容，重启docker后就可以支持断点续传</li>
+</ul>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> <span class="attr">&quot;features&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line"> <span class="attr">&quot;containerd-snapshotter&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>断点续传配置生效后，docker原有的镜像将无法识别，也就是假性清空，可以把断点续传配置取消，镜像就又能识别了</li>
+</ul>
+<blockquote>
+<p>原理</p>
+</blockquote>
+<ul>
+<li>docker断点续传本质是不断对拉取的镜像层打“快照”，如果你有一次突然中断了拉取，再次进行拉取时，docker会取出快照，接着原来的进度继续拉取，所以断点续传会产生较多的冗余数据，占空间</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2025/04/04/docker-pull-%E6%96%AD%E7%82%B9%E7%BB%AD%E4%BC%A0/" data-id="cm92w4yzg00002ekd05dhgjn5" data-title="docker pull 断点续传" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/" rel="tag">docker</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-docker-load-与-docker-pull" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2025/04/04/docker-load-%E4%B8%8E-docker-pull/" class="article-date">
@@ -222,7 +454,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/cicd/" rel="tag">cicd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/backend/" rel="tag">backend</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cicd/" rel="tag">cicd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a></li></ul>
     </div>
   </div>
 
@@ -232,7 +464,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/cicd/" style="font-size: 10px;">cicd</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a>
+      <a href="/tags/backend/" style="font-size: 15px;">backend</a> <a href="/tags/cicd/" style="font-size: 10px;">cicd</a> <a href="/tags/docker/" style="font-size: 20px;">docker</a>
     </div>
   </div>
 
@@ -254,11 +486,23 @@
       <ul>
         
           <li>
-            <a href="/2025/04/04/docker-load-%E4%B8%8E-docker-pull/">docker load 与 docker pull</a>
+            <a href="/2025/04/04/%E5%A6%82%E4%BD%95%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B%E4%B8%80%E4%B8%AA%E9%A1%B9%E7%9B%AE%EF%BC%88%E5%90%8E%E7%AB%AF%EF%BC%89/">如何快速上手一个项目（后端）</a>
           </li>
         
           <li>
-            <a href="/2025/04/04/githubFlow/">githubFlow</a>
+            <a href="/2025/04/04/%E7%AC%AC%E4%B8%89%E6%96%B9%E6%94%AF%E4%BB%98%E6%8E%A5%E5%85%A5-stripe%E4%B8%BA%E4%BE%8B/">第三方支付接入(stripe为例)</a>
+          </li>
+        
+          <li>
+            <a href="/2025/04/04/docker-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/">docker 文件系统</a>
+          </li>
+        
+          <li>
+            <a href="/2025/04/04/docker-pull-%E6%96%AD%E7%82%B9%E7%BB%AD%E4%BC%A0/">docker pull 断点续传</a>
+          </li>
+        
+          <li>
+            <a href="/2025/04/04/docker-load-%E4%B8%8E-docker-pull/">docker load 与 docker pull</a>
           </li>
         
       </ul>
