@@ -76,6 +76,56 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-docker-load-与-docker-pull" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2025/04/04/docker-load-%E4%B8%8E-docker-pull/" class="article-date">
+  <time class="dt-published" datetime="2025-04-04T14:21:51.000Z" itemprop="datePublished">2025-04-04</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2025/04/04/docker-load-%E4%B8%8E-docker-pull/">docker load 与 docker pull</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>最近发现一种很奇葩的情况：</p>
+<p>A机push镜像a（版本：0.0.0，hash值：a）到harbor</p>
+<p>A机修改了a的容器并commit了镜像b（版本：0.0.0，hash值：b）</p>
+<p>A机push镜像b上harbor</p>
+<p>A机 save镜像a成tar包并通过USB直接传给B机</p>
+<p>B机load tar包得到镜像a（版本号：0.0.0，hash值：a）</p>
+<p>B机pull harbor上版本号为0.0.0的镜像</p>
+<p>发现B机全部层重拉</p>
+<p>B机pull harbor上hash为a的镜像，不用重拉</p>
+<p>但是，dockerHub完全没有以上问题，区别就在于，dockerHub和harbor的存储结构不一样，harbor有一个镜像层标识，docker save会抹除这个标识，导致无法识别</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2025/04/04/docker-load-%E4%B8%8E-docker-pull/" data-id="cm92vnreh0000t7kd3mbq479e" data-title="docker load 与 docker pull" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/" rel="tag">docker</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-githubFlow" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2025/04/04/githubFlow/" class="article-date">
@@ -149,6 +199,8 @@
       
       
       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cicd/" rel="tag">cicd</a></li></ul>
+
     </footer>
   </div>
   
@@ -167,9 +219,23 @@
 
   
     
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/cicd/" rel="tag">cicd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a></li></ul>
+    </div>
+  </div>
+
 
   
     
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/cicd/" style="font-size: 10px;">cicd</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a>
+    </div>
+  </div>
+
   
     
   <div class="widget-wrap">
@@ -186,6 +252,10 @@
     <h3 class="widget-title">最新文章</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2025/04/04/docker-load-%E4%B8%8E-docker-pull/">docker load 与 docker pull</a>
+          </li>
         
           <li>
             <a href="/2025/04/04/githubFlow/">githubFlow</a>
