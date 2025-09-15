@@ -4,18 +4,30 @@
   <meta charset="utf-8">
   
   
-  <title>Welcome to kkb blog</title>
+  <title>mcp 协议理解 | Welcome to kkb blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="个人简单记录一下学习">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Welcome to kkb blog">
-<meta property="og:url" content="https://kkb-1.github.io/index.html">
+  <meta name="description" content="Mcp 协议分析  整个 Mcp ，无论是 Stdio 、 Sse 、Streamable ，只要遵守对应的 JSONRPC 请求和响应格式，即使你实际上只是一个空壳，大模型依然会相信你是个 Mcp 。  Stdio  Stdio 实际上是本地执行命令。  举个例子，假设你本地有一个 exe 文件，路径是：C:&#x2F;&#x2F;User&#x2F;test.exe (路径我乱编的，格式可能">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mcp 协议理解">
+<meta property="og:url" content="https://kkb-1.github.io/2025/09/15/mcp-%E5%8D%8F%E8%AE%AE%E7%90%86%E8%A7%A3/index.html">
 <meta property="og:site_name" content="Welcome to kkb blog">
-<meta property="og:description" content="个人简单记录一下学习">
+<meta property="og:description" content="Mcp 协议分析  整个 Mcp ，无论是 Stdio 、 Sse 、Streamable ，只要遵守对应的 JSONRPC 请求和响应格式，即使你实际上只是一个空壳，大模型依然会相信你是个 Mcp 。  Stdio  Stdio 实际上是本地执行命令。  举个例子，假设你本地有一个 exe 文件，路径是：C:&#x2F;&#x2F;User&#x2F;test.exe (路径我乱编的，格式可能">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://b0qot091gap.feishu.cn/space/api/box/stream/download/asynccode/?code=MjJhM2U0ODVlYmRhZGJhMGVmMmE0NGRhYmQ3NjFkYzlfNU0xblRMZ3d2cEJERFUzVGZFNFB5RTR2N2hvMzFSVmhfVG9rZW46S2RJWmI4VTM0b3lKUW54WWpDMmNBbDExblpiXzE3NTc5MDMzNzY6MTc1NzkwNjk3Nl9WNA">
+<meta property="og:image" content="https://b0qot091gap.feishu.cn/space/api/box/stream/download/asynccode/?code=MmZkZWEyNTg5YTAxZDQyYmNlMTUxMDVjOTNlYWY5ZGRfM0U1SDZ0aEF0TkFKdU1xbWpmZEtFUjBCdEVrWFRXVEhfVG9rZW46T1NxcWJ1ZTlVb29aVXp4aE9SUGNjVkoxbmlnXzE3NTc5MDMzNzY6MTc1NzkwNjk3Nl9WNA">
+<meta property="og:image" content="https://b0qot091gap.feishu.cn/space/api/box/stream/download/asynccode/?code=NzMyNTU3NTRkZDc0NjlkNWIyMzg3ZjE4N2IyY2QyYTVfaTk2Y1lEN3NTbWlGYVprV0dkWVdNS0NpTDRUVlRiR1NfVG9rZW46UHlNTGI5MGFxb2VTOXN4S0VDWWNzQ013bmhkXzE3NTc5MDMzNzY6MTc1NzkwNjk3Nl9WNA">
+<meta property="og:image" content="https://b0qot091gap.feishu.cn/space/api/box/stream/download/asynccode/?code=YzQyMzRiMTM5NzI4NGU5NGZlYWMwMzIyMGY3YjBlMzFfSDYwcFhKWW1yVlhxamxoVkhrYjRGZVNITXA0RXhwTGFfVG9rZW46R3ZzQ2JRMTF0b3dHVE54MmNEeWNMQko0bmpnXzE3NTc5MDMzNzY6MTc1NzkwNjk3Nl9WNA">
+<meta property="og:image" content="https://b0qot091gap.feishu.cn/space/api/box/stream/download/asynccode/?code=YWQzMzE3N2IwZmYwMTE4YzhkNjA4ZmExMGZiYjE1YWRfaFMwcVdaNVZrdERMZFk3Njg1ZkJxeENlY1pDNnhmRUNfVG9rZW46SWVYQWJ3aEo3bzJFdzl4MmR0a2M0RjFUbjhvXzE3NTc5MDMzNzY6MTc1NzkwNjk3Nl9WNA">
+<meta property="og:image" content="https://b0qot091gap.feishu.cn/space/api/box/stream/download/asynccode/?code=ZTZhMjBiY2JmYTc0NTdiNjVmNmIzYzMzMjM1YzljYjVfblRENmltQVFOclA0U2xObkNSMWk0bkVxZnZYN1NyVEZfVG9rZW46WnkyaGJZU0ZUb2xZUVZ4cmV2V2Nrbzh3bnNmXzE3NTc5MDMzNzY6MTc1NzkwNjk3Nl9WNA">
+<meta property="og:image" content="https://b0qot091gap.feishu.cn/space/api/box/stream/download/asynccode/?code=M2E5MDYxZDYzN2E4YzViYzg3YjNhZDM0MDdlMzY2ODRfNlB4azVXVEcyRjVrM05iZ0t0Y0dQSDFtc1RjUUN2Wk1fVG9rZW46UGZBRWJJcVdCb0Y2Y1J4NVhIbGNUNnFMbktoXzE3NTc5MDMzNzY6MTc1NzkwNjk3Nl9WNA">
+<meta property="og:image" content="https://b0qot091gap.feishu.cn/space/api/box/stream/download/asynccode/?code=NzE0NDUwN2VmYTdjYzgzN2E4ZWU1ZGQyOGJjYWY1OGNfcnBmdHJwTER3ZWozR0psOGZLYzVRak9BWWN1dVdmUUNfVG9rZW46VDFoWGI2bEZYbzZWR294ZldubWMxSUJ3bkRjXzE3NTc5MDMzNzY6MTc1NzkwNjk3Nl9WNA">
+<meta property="og:image" content="https://b0qot091gap.feishu.cn/space/api/box/stream/download/asynccode/?code=YzY5NDlhNDUzM2FiNmY5Y2U3NDRmZGZlMjk5NjJhMTdfMUpyWmtFNXlxbTlKNWpzN21zZ2s2NW9IMDB0SWtDY1JfVG9rZW46UzdTTWIzUkgxb29mZ1h4TWtUWmNVQmJhbkVmXzE3NTc5MDMzNzY6MTc1NzkwNjk3Nl9WNA">
+<meta property="article:published_time" content="2025-09-15T02:20:11.000Z">
+<meta property="article:modified_time" content="2025-09-15T02:30:36.645Z">
 <meta property="article:author" content="kkb">
-<meta property="article:tag" content="blog">
+<meta property="article:tag" content="aigc">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://b0qot091gap.feishu.cn/space/api/box/stream/download/asynccode/?code=MjJhM2U0ODVlYmRhZGJhMGVmMmE0NGRhYmQ3NjFkYzlfNU0xblRMZ3d2cEJERFUzVGZFNFB5RTR2N2hvMzFSVmhfVG9rZW46S2RJWmI4VTM0b3lKUW54WWpDMmNBbDExblpiXzE3NTc5MDMzNzY6MTc1NzkwNjk3Nl9WNA">
   
     <link rel="alternate" href="/atom.xml" title="Welcome to kkb blog" type="application/atom+xml">
   
@@ -76,9 +88,7 @@
 </header>
 
       <div class="outer">
-        <section id="main">
-  
-    <article id="post-mcp-协议理解" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+        <section id="main"><article id="post-mcp-协议理解" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2025/09/15/mcp-%E5%8D%8F%E8%AE%AE%E7%90%86%E8%A7%A3/" class="article-date">
   <time class="dt-published" datetime="2025-09-15T02:20:11.000Z" itemprop="datePublished">2025-09-15</time>
@@ -91,8 +101,8 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2025/09/15/mcp-%E5%8D%8F%E8%AE%AE%E7%90%86%E8%A7%A3/">mcp 协议理解</a>
+    <h1 class="p-name article-title" itemprop="headline name">
+      mcp 协议理解
     </h1>
   
 
@@ -353,382 +363,19 @@
     </footer>
   </div>
   
-</article>
-
-
-
+    
+<nav id="article-nav">
   
-    <article id="post-如何快速上手一个项目（后端）" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2025/04/04/%E5%A6%82%E4%BD%95%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B%E4%B8%80%E4%B8%AA%E9%A1%B9%E7%9B%AE%EF%BC%88%E5%90%8E%E7%AB%AF%EF%BC%89/" class="article-date">
-  <time class="dt-published" datetime="2025-04-04T14:38:53.000Z" itemprop="datePublished">2025-04-04</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2025/04/04/%E5%A6%82%E4%BD%95%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B%E4%B8%80%E4%B8%AA%E9%A1%B9%E7%9B%AE%EF%BC%88%E5%90%8E%E7%AB%AF%EF%BC%89/">如何快速上手一个项目（后端）</a>
-    </h1>
+    <a href="/2025/04/04/%E5%A6%82%E4%BD%95%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B%E4%B8%80%E4%B8%AA%E9%A1%B9%E7%9B%AE%EF%BC%88%E5%90%8E%E7%AB%AF%EF%BC%89/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">后一篇</strong>
+      <div class="article-nav-title">如何快速上手一个项目（后端）</div>
+    </a>
   
+</nav>
 
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <ol>
-<li>要项目拉取权限<br>这一点虽然很废话，但是你刚来就敢主动找 mt 要项目不？</li>
-<li>有没有开发规范和接口文档？<br>问 mt 要一个看，如果没有那也没事，有的话会更方便你后续开发</li>
-<li>寻找 main</li>
-</ol>
-<ul>
-<li>main 是运行代码的入口，只有找到了它，你才能开始后续的操作</li>
-<li>一般来说 main 中会包含：<ul>
-<li>配置初始化</li>
-<li>定时任务启动（当然，一般一个已经稳定的项目，它的定时任务是分离出去的）</li>
-<li>创建 web 服务器</li>
-</ul>
-</li>
-</ul>
-<ol start="4">
-<li>快速熟悉项目代码风格</li>
-</ol>
-<ul>
-<li>先寻找 router ，在 router 中寻找一个你认为分离得比较成功的路由小模块</li>
-<li>看路由写法</li>
-<li>随机找一个接口进去看</li>
-<li>如果你有开发规范文档，那么就可以结合着文档了解他们的接口名、函数名、变量名、结构体名这些命名规范</li>
-<li>看它是怎么使用 log 、 db 和 cache 的</li>
-<li>如何处理错误，错误应该如何构建</li>
-<li>常量是放在哪里的？</li>
-<li>好了，现在回过头来看一下，你一路追下来的文件的文件夹层是怎么个分布法（恭喜，你已经会写一个符合团队风格的接口了）</li>
-<li>寻找 config ，你只有一个任务，它是怎么读配置的</li>
-</ul>
-<ol start="5">
-<li>同步业务信息</li>
-</ol>
-<ul>
-<li>直接看 git 提交记录，等同于爬楼看聊天记录一样，如果前者的 commit 写得正常点，你就能快速看懂它在干嘛</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://kkb-1.github.io/2025/04/04/%E5%A6%82%E4%BD%95%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B%E4%B8%80%E4%B8%AA%E9%A1%B9%E7%9B%AE%EF%BC%88%E5%90%8E%E7%AB%AF%EF%BC%89/" data-id="cm92w4yzj00032ekdg37bc144" data-title="如何快速上手一个项目（后端）" class="article-share-link"><span class="fa fa-share">分享</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/backend/" rel="tag">backend</a></li></ul>
-
-    </footer>
-  </div>
   
 </article>
-
-
-
-  
-    <article id="post-第三方支付接入-stripe为例" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2025/04/04/%E7%AC%AC%E4%B8%89%E6%96%B9%E6%94%AF%E4%BB%98%E6%8E%A5%E5%85%A5-stripe%E4%B8%BA%E4%BE%8B/" class="article-date">
-  <time class="dt-published" datetime="2025-04-04T14:37:39.000Z" itemprop="datePublished">2025-04-04</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2025/04/04/%E7%AC%AC%E4%B8%89%E6%96%B9%E6%94%AF%E4%BB%98%E6%8E%A5%E5%85%A5-stripe%E4%B8%BA%E4%BE%8B/">第三方支付接入(stripe为例)</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <ol>
-<li>开启交易会话<ol>
-<li>使用平台提供的私钥，向平台的创建交易会话的接口发起请求，生成一个交易链接，需要提供价格ID、商品数量、成功支付重定向链接、取消支付重定向链接等自定义参数</li>
-<li>价格ID：价格在stripe中是一个概念实体，比如你有一个VIP服务商品，可以一次性开通一个月，也可以连续包月，那这个商品就有两个价格了，每个价格的单价与结算方式是不一样的，同时每个价格都有唯一的ID，即价格ID</li>
-</ol>
-</li>
-<li>事件监听<br>  【背景】用户的支付是在第三方平台完成的，对于我们服务端来说是无感知的，即你无法直接得知用户是否付完钱、哪个用户付了哪一笔钱。所以你需要向第三方平台订阅这个消息，这个订阅也叫做事件监听<ol>
-<li>创建服务端事件回调接口：当第三方平台想要向服务端发送消息时，就会把消息发送到事件回调接口，事件回调接口接收消息并正确处理消息（包括：将订单状态转为成功支付）</li>
-<li>注册第三方事件监听：在第三方注册自己的回调接口以及需要触发回调的事件类型</li>
-<li>事件成功监听：第三方与服务端会约定一个规则来确认是否服务端成功接收并处理事件，例如服务端成功接收并处理事件就返回200状态码</li>
-<li>事件重发行为：由于网络环境复杂，不能确保发一次消息就能成功，所以一般第三方会有不断重发的行为逻辑，知道得到服务端的确认（例如：200状态码）</li>
-<li>事件监听的不可信：不论是网络问题还是第三方平台服务崩溃问题，都有可能导致消息发送失败，并且支付可能有延迟完成的情况（比如银行走流程确认转帐什么的），所以第三方支付一般不保证事件实时发送给服务端</li>
-<li>事件鉴权：与第三方约定好一个鉴权机制，确保请求事件监听回调接口的是第三方</li>
-</ol>
-</li>
-<li>最终方案<ol>
-<li>发起交易会话的同时，生成一个订单ID，与会话ID结合加密生成一个新ID</li>
-<li>支付成功重定向的网址拿会话ID请求事件回调接口，事件回调接口发现无法通过strip的鉴权，认为是重定向的请求，此时向strip发起请求确认交易会话状态</li>
-<li>为了防止支付成功并重定向那一刻服务端崩溃，以事件监听作为兜底机制</li>
-<li>strip请求事件回调接口，通过strip的鉴权，可以信任strip发来的事件状态，也可以不信任，重新向strip发起请求确认交易会话状态</li>
-<li>总体采用状态机模式</li>
-<li>确认订单状态，完成订单</li>
-</ol>
-</li>
-</ol>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://kkb-1.github.io/2025/04/04/%E7%AC%AC%E4%B8%89%E6%96%B9%E6%94%AF%E4%BB%98%E6%8E%A5%E5%85%A5-stripe%E4%B8%BA%E4%BE%8B/" data-id="cm92w4yzj00052ekdgrab2wr8" data-title="第三方支付接入(stripe为例)" class="article-share-link"><span class="fa fa-share">分享</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/backend/" rel="tag">backend</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-docker-文件系统" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2025/04/04/docker-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" class="article-date">
-  <time class="dt-published" datetime="2025-04-04T14:34:47.000Z" itemprop="datePublished">2025-04-04</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2025/04/04/docker-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/">docker 文件系统</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>联合文件系统</p>
-</blockquote>
-<p>联合文件系统（Union File System）UnionFS是docker制作镜像和容器文件的主要技术。通过联合文件系统，可以将多个路径挂载到同一个挂载点上，实现多个path的合并操作（上层同名文件会将下层文件覆盖），最后通过挂载点想上层应用&#x2F;用户呈现一个合并之后的视图，联合文件系统有多种实现，ubuntu采用AUFS实现，centos采用overlay&#x2F;overlay2来实现。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://kkb-1.github.io/2025/04/04/docker-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" data-id="cm92w4yzi00012ekd592na202" data-title="docker 文件系统" class="article-share-link"><span class="fa fa-share">分享</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/" rel="tag">docker</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-docker-pull-断点续传" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2025/04/04/docker-pull-%E6%96%AD%E7%82%B9%E7%BB%AD%E4%BC%A0/" class="article-date">
-  <time class="dt-published" datetime="2025-04-04T14:34:39.000Z" itemprop="datePublished">2025-04-04</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2025/04/04/docker-pull-%E6%96%AD%E7%82%B9%E7%BB%AD%E4%BC%A0/">docker pull 断点续传</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <ul>
-<li>随着技术和业务不断迭代，镜像层不断叠加，会出现非常大的镜像，以默认的docker配置拉取的话，网络一旦波动就会前功尽弃，这其实是非常灾难性的情况</li>
-<li>docker可以通过在配置文件中添加👇的配置内容，重启docker后就可以支持断点续传</li>
-</ul>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> <span class="attr">&quot;features&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line"> <span class="attr">&quot;containerd-snapshotter&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>断点续传配置生效后，docker原有的镜像将无法识别，也就是假性清空，可以把断点续传配置取消，镜像就又能识别了</li>
-</ul>
-<blockquote>
-<p>原理</p>
-</blockquote>
-<ul>
-<li>docker断点续传本质是不断对拉取的镜像层打“快照”，如果你有一次突然中断了拉取，再次进行拉取时，docker会取出快照，接着原来的进度继续拉取，所以断点续传会产生较多的冗余数据，占空间</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://kkb-1.github.io/2025/04/04/docker-pull-%E6%96%AD%E7%82%B9%E7%BB%AD%E4%BC%A0/" data-id="cm92w4yzg00002ekd05dhgjn5" data-title="docker pull 断点续传" class="article-share-link"><span class="fa fa-share">分享</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/" rel="tag">docker</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-docker-load-与-docker-pull" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2025/04/04/docker-load-%E4%B8%8E-docker-pull/" class="article-date">
-  <time class="dt-published" datetime="2025-04-04T14:21:51.000Z" itemprop="datePublished">2025-04-04</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2025/04/04/docker-load-%E4%B8%8E-docker-pull/">docker load 与 docker pull</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p>最近发现一种很奇葩的情况：</p>
-<p>A机push镜像a（版本：0.0.0，hash值：a）到harbor</p>
-<p>A机修改了a的容器并commit了镜像b（版本：0.0.0，hash值：b）</p>
-<p>A机push镜像b上harbor</p>
-<p>A机 save镜像a成tar包并通过USB直接传给B机</p>
-<p>B机load tar包得到镜像a（版本号：0.0.0，hash值：a）</p>
-<p>B机pull harbor上版本号为0.0.0的镜像</p>
-<p>发现B机全部层重拉</p>
-<p>B机pull harbor上hash为a的镜像，不用重拉</p>
-<p>但是，dockerHub完全没有以上问题，区别就在于，dockerHub和harbor的存储结构不一样，harbor有一个镜像层标识，docker save会抹除这个标识，导致无法识别</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://kkb-1.github.io/2025/04/04/docker-load-%E4%B8%8E-docker-pull/" data-id="cm92vnreh0000t7kd3mbq479e" data-title="docker load 与 docker pull" class="article-share-link"><span class="fa fa-share">分享</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/" rel="tag">docker</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-githubFlow" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2025/04/04/githubFlow/" class="article-date">
-  <time class="dt-published" datetime="2025-04-04T14:18:42.000Z" itemprop="datePublished">2025-04-04</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2025/04/04/githubFlow/">githubFlow</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h2 id="1-githubflow有什么用"><a href="#1-githubflow有什么用" class="headerlink" title="1. githubflow有什么用"></a>1. githubflow有什么用</h2><p>githubflow是指github的工作流（详细可看github的Action选项）</p>
-<p>githubflow常用于：</p>
-<ul>
-<li>merge时，自动检测是否有错误</li>
-<li>merge时，自动打包镜像并部署（这个最厉害，自动化cicd）</li>
-</ul>
-<h2 id="1-语法"><a href="#1-语法" class="headerlink" title="1.语法"></a>1.语法</h2><p>使用的是yaml语法</p>
-<table>
-<thead>
-<tr>
-<th>关键字</th>
-<th>解释</th>
-<th>示例</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>name</td>
-<td>工作流名称</td>
-<td></td>
-</tr>
-<tr>
-<td>on</td>
-<td>在什么时候触发工作流</td>
-<td>看2.1</td>
-</tr>
-<tr>
-<td>jobs</td>
-<td>工作流具体内容</td>
-<td>看2.2</td>
-</tr>
-</tbody></table>
-<blockquote>
-<p>示例</p>
-</blockquote>
-<ul>
-<li>2.1</li>
-</ul>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">on</span>:</span><br><span class="line">  <span class="attr">push</span>: <span class="comment">//当进行push时</span></span><br><span class="line">    <span class="attr">branches</span>:[ <span class="string">&quot;master&quot;</span> ] <span class="comment">//push到分支master时</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>2.2</li>
-</ul>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">jobs</span>:</span><br><span class="line">  <span class="attr">build</span>: <span class="comment">//构建阶段</span></span><br><span class="line">    runs-<span class="attr">on</span>: ubuntu-latest <span class="comment">//使用ubuntu-latest镜像</span></span><br><span class="line">    </span><br><span class="line">    <span class="attr">steps</span>: <span class="comment">//后续步骤</span></span><br><span class="line">    - <span class="attr">uses</span>: action/checkout<span class="meta">@v3</span> <span class="comment">//使用该action库，actions/checkout 是一个官方提供的 GitHub Action，用于检查出代码。@v3 指定了动作的版本，这里使用的是版本 3</span></span><br><span class="line">    - <span class="attr">name</span>: (该过程的名称，自定义)</span><br><span class="line">      <span class="attr">run</span>: |  <span class="comment">//|用于表示准备多行字符串</span></span><br><span class="line">      （这里写一下自己的构建镜像的shell命令）</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://kkb-1.github.io/2025/04/04/githubFlow/" data-id="cm92vg6330000r5kdedg62rky" data-title="githubFlow" class="article-share-link"><span class="fa fa-share">分享</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cicd/" rel="tag">cicd</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
 
 
 </section>
