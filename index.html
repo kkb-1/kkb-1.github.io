@@ -129,7 +129,7 @@
 <li><h2 id="Sse"><a href="#Sse" class="headerlink" title="Sse"></a>Sse</h2></li>
 </ol>
 <p>Sse 骚操作有点多，他输入和输出不是同一个接口，也就是说他由两个接口组成一个完整的输入输出，类似下面</p>
-<p><img src="https://b0qot091gap.feishu.cn/space/api/box/stream/download/asynccode/?code=MjJhM2U0ODVlYmRhZGJhMGVmMmE0NGRhYmQ3NjFkYzlfNU0xblRMZ3d2cEJERFUzVGZFNFB5RTR2N2hvMzFSVmhfVG9rZW46S2RJWmI4VTM0b3lKUW54WWpDMmNBbDExblpiXzE3NTc5MDMzNzY6MTc1NzkwNjk3Nl9WNA" alt="img"></p>
+<p><img src="http://t2zwm17t5.hn-bkt.clouddn.com/image.png" alt="img"></p>
 <ul>
 <li>sse 端点:<ul>
 <li>用于向客户端发消息，这个端点接口会持续存在，符合 sse 协议，持续吐消息</li>
@@ -141,15 +141,15 @@
 </li>
 <li>整个过程<ul>
 <li>请求 sse 端点， sse 端点会返回一个 endpoint 消息，里面包含了 messages 端点路径和分配的 sessionid ，至于前面的域名什么的，约定与 sse 端点的域名保持一致（<a href="http://127.0.0.1:8094）">http://127.0.0.1:8094）</a></li>
-<li><img src="https://b0qot091gap.feishu.cn/space/api/box/stream/download/asynccode/?code=MmZkZWEyNTg5YTAxZDQyYmNlMTUxMDVjOTNlYWY5ZGRfM0U1SDZ0aEF0TkFKdU1xbWpmZEtFUjBCdEVrWFRXVEhfVG9rZW46T1NxcWJ1ZTlVb29aVXp4aE9SUGNjVkoxbmlnXzE3NTc5MDMzNzY6MTc1NzkwNjk3Nl9WNA" alt="img"></li>
+<li><img src="http://t2zwm17t5.hn-bkt.clouddn.com/image%20%281%29.png" alt="img"></li>
 <li>向 messages 端点发送初始化消息，messages 端点只会响应一个 accepted</li>
-<li><img src="https://b0qot091gap.feishu.cn/space/api/box/stream/download/asynccode/?code=NzMyNTU3NTRkZDc0NjlkNWIyMzg3ZjE4N2IyY2QyYTVfaTk2Y1lEN3NTbWlGYVprV0dkWVdNS0NpTDRUVlRiR1NfVG9rZW46UHlNTGI5MGFxb2VTOXN4S0VDWWNzQ013bmhkXzE3NTc5MDMzNzY6MTc1NzkwNjk3Nl9WNA" alt="img"></li>
-<li><img src="https://b0qot091gap.feishu.cn/space/api/box/stream/download/asynccode/?code=YzQyMzRiMTM5NzI4NGU5NGZlYWMwMzIyMGY3YjBlMzFfSDYwcFhKWW1yVlhxamxoVkhrYjRGZVNITXA0RXhwTGFfVG9rZW46R3ZzQ2JRMTF0b3dHVE54MmNEeWNMQko0bmpnXzE3NTc5MDMzNzY6MTc1NzkwNjk3Nl9WNA" alt="img"></li>
+<li><img src="http://t2zwm17t5.hn-bkt.clouddn.com/image%20%282%29.png" alt="img"></li>
+<li><img src="http://t2zwm17t5.hn-bkt.clouddn.com/image%20%283%29.png" alt="img"></li>
 <li>此时 sse 端点会得到 server 返回的信息</li>
-<li><img src="https://b0qot091gap.feishu.cn/space/api/box/stream/download/asynccode/?code=YWQzMzE3N2IwZmYwMTE4YzhkNjA4ZmExMGZiYjE1YWRfaFMwcVdaNVZrdERMZFk3Njg1ZkJxeENlY1pDNnhmRUNfVG9rZW46SWVYQWJ3aEo3bzJFdzl4MmR0a2M0RjFUbjhvXzE3NTc5MDMzNzY6MTc1NzkwNjk3Nl9WNA" alt="img"></li>
+<li><img src="http://t2zwm17t5.hn-bkt.clouddn.com/image%20%284%29.png" alt="img"></li>
 <li>包括 tool call 也是一样的</li>
-<li><img src="https://b0qot091gap.feishu.cn/space/api/box/stream/download/asynccode/?code=ZTZhMjBiY2JmYTc0NTdiNjVmNmIzYzMzMjM1YzljYjVfblRENmltQVFOclA0U2xObkNSMWk0bkVxZnZYN1NyVEZfVG9rZW46WnkyaGJZU0ZUb2xZUVZ4cmV2V2Nrbzh3bnNmXzE3NTc5MDMzNzY6MTc1NzkwNjk3Nl9WNA" alt="img"></li>
-<li><img src="https://b0qot091gap.feishu.cn/space/api/box/stream/download/asynccode/?code=M2E5MDYxZDYzN2E4YzViYzg3YjNhZDM0MDdlMzY2ODRfNlB4azVXVEcyRjVrM05iZ0t0Y0dQSDFtc1RjUUN2Wk1fVG9rZW46UGZBRWJJcVdCb0Y2Y1J4NVhIbGNUNnFMbktoXzE3NTc5MDMzNzY6MTc1NzkwNjk3Nl9WNA" alt="img"></li>
+<li><img src="http://t2zwm17t5.hn-bkt.clouddn.com/image%20%285%29.png" alt="img"></li>
+<li><img src="http://t2zwm17t5.hn-bkt.clouddn.com/image%20%286%29.png" alt="img"></li>
 </ul>
 </li>
 </ul>
@@ -187,8 +187,8 @@
 </ul>
 </li>
 </ul>
-<p><img src="https://b0qot091gap.feishu.cn/space/api/box/stream/download/asynccode/?code=NzE0NDUwN2VmYTdjYzgzN2E4ZWU1ZGQyOGJjYWY1OGNfcnBmdHJwTER3ZWozR0psOGZLYzVRak9BWWN1dVdmUUNfVG9rZW46VDFoWGI2bEZYbzZWR294ZldubWMxSUJ3bkRjXzE3NTc5MDMzNzY6MTc1NzkwNjk3Nl9WNA" alt="img"></p>
-<p><img src="https://b0qot091gap.feishu.cn/space/api/box/stream/download/asynccode/?code=YzY5NDlhNDUzM2FiNmY5Y2U3NDRmZGZlMjk5NjJhMTdfMUpyWmtFNXlxbTlKNWpzN21zZ2s2NW9IMDB0SWtDY1JfVG9rZW46UzdTTWIzUkgxb29mZ1h4TWtUWmNVQmJhbkVmXzE3NTc5MDMzNzY6MTc1NzkwNjk3Nl9WNA" alt="img"></p>
+<p><img src="http://t2zwm17t5.hn-bkt.clouddn.com/image%20%287%29.png" alt="img"></p>
+<p><img src="http://t2zwm17t5.hn-bkt.clouddn.com/image%20%288%29.png" alt="img"></p>
 <ol>
 <li><h1 id="Mcp-请求响应分析"><a href="#Mcp-请求响应分析" class="headerlink" title="Mcp 请求响应分析"></a>Mcp 请求响应分析</h1></li>
 </ol>
