@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>AI 上下文工程 | Welcome to kkb blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="长期记忆系统反思 元提示（框架）： 向 llm 提问，让其回顾失败，生成摘要避免未来犯错    观察 原始日志收集 合成日志 让 llm 总结出新洞察    选择 工具集 使用 RAG 建立工具索引，这样子可以把最相关的 n 个加载进上下文而无需全部加载   固定+遮蔽： 通过复用 cv 缓存来加速   混合检索 多路召回：向量、关键词、知识图谱，多方面去获取信息 Agentic 探索： agen">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AI 上下文工程">
+<meta property="og:url" content="https://kkb-1.github.io/2025/10/27/AI-%E4%B8%8A%E4%B8%8B%E6%96%87%E5%B7%A5%E7%A8%8B/index.html">
+<meta property="og:site_name" content="Welcome to kkb blog">
+<meta property="og:description" content="长期记忆系统反思 元提示（框架）： 向 llm 提问，让其回顾失败，生成摘要避免未来犯错    观察 原始日志收集 合成日志 让 llm 总结出新洞察    选择 工具集 使用 RAG 建立工具索引，这样子可以把最相关的 n 个加载进上下文而无需全部加载   固定+遮蔽： 通过复用 cv 缓存来加速   混合检索 多路召回：向量、关键词、知识图谱，多方面去获取信息 Agentic 探索： agen">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://kkb-1.github.io/images/image9.png">
+<meta property="article:published_time" content="2025-10-27T06:58:43.000Z">
+<meta property="article:modified_time" content="2025-10-31T07:03:03.252Z">
+<meta property="article:author" content="kkb">
+<meta property="article:tag" content="aigc">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://kkb-1.github.io/images/image9.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Welcome to kkb blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css">
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Welcome to kkb blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">笑口常开， cheap man 自然 lang</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS 订阅"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="搜索"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://kkb-1.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-AI-上下文工程" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2025/10/27/AI-%E4%B8%8A%E4%B8%8B%E6%96%87%E5%B7%A5%E7%A8%8B/" class="article-date">
+  <time class="dt-published" datetime="2025-10-27T06:58:43.000Z" itemprop="datePublished">2025-10-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      AI 上下文工程
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="长期记忆系统"><a href="#长期记忆系统" class="headerlink" title="长期记忆系统"></a>长期记忆系统</h1><h2 id="反思"><a href="#反思" class="headerlink" title="反思"></a>反思</h2><ul>
+<li>元提示（框架）：<ul>
+<li>向 llm 提问，让其回顾失败，生成摘要避免未来犯错</li>
+</ul>
+</li>
+</ul>
+<h2 id="观察"><a href="#观察" class="headerlink" title="观察"></a>观察</h2><ul>
+<li>原始日志收集</li>
+<li>合成日志<ul>
+<li>让 llm 总结出新洞察</li>
+</ul>
+</li>
+</ul>
+<h2 id="选择"><a href="#选择" class="headerlink" title="选择"></a>选择</h2><ul>
+<li>工具集<ul>
+<li>使用 RAG 建立工具索引，这样子可以把最相关的 n 个加载进上下文而无需全部加载</li>
+</ul>
+</li>
+<li>固定+遮蔽：<ul>
+<li>通过复用 cv 缓存来加速</li>
+</ul>
+</li>
+<li>混合检索<ul>
+<li>多路召回：向量、关键词、知识图谱，多方面去获取信息</li>
+<li>Agentic 探索： agent 在循环中，主动使用检索工具进行多步推理</li>
+<li>重排序：把召回的数据进行二次总结，用更加精细的规则或模型去提高信噪比</li>
+</ul>
+</li>
+</ul>
+<h2 id="压缩"><a href="#压缩" class="headerlink" title="压缩"></a>压缩</h2><ul>
+<li>上下文总结<ul>
+<li>LLM 提炼<ul>
+<li>总结对话历史（提炼成任务概览）</li>
+<li>对海量的 API 返回结果总结成摘要</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>上下文裁剪<ul>
+<li>丢弃信息<ul>
+<li>滑动窗口（只保留最近n轮对话）</li>
+<li>用轻量级的模型进行智能裁剪</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="微调-vs-上下文工程"><a href="#微调-vs-上下文工程" class="headerlink" title="微调 vs 上下文工程"></a>微调 vs 上下文工程</h1><ul>
+<li>Manus 团队优先上下文工程发展</li>
+</ul>
+<h1 id="kv-缓存设计"><a href="#kv-缓存设计" class="headerlink" title="kv 缓存设计"></a>kv 缓存设计</h1><ul>
+<li>kv 缓存工作机制<ul>
+<li>前缀匹配</li>
+</ul>
+</li>
+<li>提高缓存命中率的工程原则<ul>
+<li>选用 vllm 这种能支持 kv 缓存功能的现代推理框架</li>
+<li>缓存只存于同一个推理进程，所以需要用唯一标识来确保同一个会话请求打到同一个进程</li>
+<li>保持前缀稳定</li>
+<li>上下文只追加，不修改或删除中间部分</li>
+<li>如果不支持自动前缀匹配的框架，需要手动插入断电来进行缓存</li>
+</ul>
+</li>
+</ul>
+<h1 id="工具选择"><a href="#工具选择" class="headerlink" title="工具选择"></a>工具选择</h1><blockquote>
+<p>响应预填充</p>
+</blockquote>
+<p> 通过特定的前缀标签，为模型提前提供模式信号，引导他提前激活相应的模式</p>
+<p><img src="/images/image9.png" alt="img"></p>
+<h1 id="专注力"><a href="#专注力" class="headerlink" title="专注力"></a>专注力</h1><blockquote>
+<p>todo.md</p>
+</blockquote>
+<ul>
+<li>通过 write 工具在两个关键时机更新 todo.md<ul>
+<li>复杂任务分解后写入</li>
+<li>完成每个子任务就覆写最新进度</li>
+</ul>
+</li>
+</ul>
+<h1 id="反直觉"><a href="#反直觉" class="headerlink" title="反直觉"></a>反直觉</h1><p>将错误日志保留在上下文中，降低其重复犯错可能</p>
+<h1 id="多-Agent-协作"><a href="#多-Agent-协作" class="headerlink" title="多 Agent 协作"></a>多 Agent 协作</h1><ul>
+<li>通信<ul>
+<li>上下文不共享，子 agent 只处理原子性子任务</li>
+</ul>
+</li>
+<li>共享上下文<ul>
+<li>类似于 fork </li>
+<li>子 agent 拥有主 agent 全部历史＋子 agent 新 system prompt</li>
+</ul>
+</li>
+</ul>
+<h1 id="三层工具"><a href="#三层工具" class="headerlink" title="三层工具"></a>三层工具</h1><ul>
+<li>极少数、固定的原子函数</li>
+<li>能力扩展，通过第一层的原子函数（execute_shell）调用获得外部动态工具箱</li>
+<li>组合使用第一层和第二层编写并执行脚本</li>
+</ul>
+<h1 id="处理大型工具输出"><a href="#处理大型工具输出" class="headerlink" title="处理大型工具输出"></a>处理大型工具输出</h1><ul>
+<li>创建子 agent 去提炼，只返回固定的、结构化的结果。（就是一层层套娃，直到套娃到原子行为）</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://kkb-1.github.io/2025/10/27/AI-%E4%B8%8A%E4%B8%8B%E6%96%87%E5%B7%A5%E7%A8%8B/" data-id="cmheib4rz0000xckd2suy22di" data-title="AI 上下文工程" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/aigc/" rel="tag">aigc</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2025/10/31/%E6%9C%AC%E5%9C%B0%E4%BA%8B%E4%BB%B6%E6%80%BB%E7%BA%BF/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前一篇</strong>
+      <div class="article-nav-title">
+        
+          本地事件总线
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2025/09/15/mcp-%E5%8D%8F%E8%AE%AE%E7%90%86%E8%A7%A3/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">后一篇</strong>
+      <div class="article-nav-title">mcp 协议理解</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/aigc/" rel="tag">aigc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/backend/" rel="tag">backend</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cicd/" rel="tag">cicd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/aigc/" style="font-size: 13.33px;">aigc</a> <a href="/tags/backend/" style="font-size: 20px;">backend</a> <a href="/tags/cicd/" style="font-size: 10px;">cicd</a> <a href="/tags/docker/" style="font-size: 16.67px;">docker</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/10/">十月 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/09/">九月 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/04/">四月 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/09/">九月 2024</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2025/10/31/%E6%9C%AC%E5%9C%B0%E4%BA%8B%E4%BB%B6%E6%80%BB%E7%BA%BF/">本地事件总线</a>
+          </li>
+        
+          <li>
+            <a href="/2025/10/27/AI-%E4%B8%8A%E4%B8%8B%E6%96%87%E5%B7%A5%E7%A8%8B/">AI 上下文工程</a>
+          </li>
+        
+          <li>
+            <a href="/2025/09/15/mcp-%E5%8D%8F%E8%AE%AE%E7%90%86%E8%A7%A3/">mcp 协议理解</a>
+          </li>
+        
+          <li>
+            <a href="/2025/04/04/%E5%A6%82%E4%BD%95%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B%E4%B8%80%E4%B8%AA%E9%A1%B9%E7%9B%AE%EF%BC%88%E5%90%8E%E7%AB%AF%EF%BC%89/">如何快速上手一个项目（后端）</a>
+          </li>
+        
+          <li>
+            <a href="/2025/04/04/%E7%AC%AC%E4%B8%89%E6%96%B9%E6%94%AF%E4%BB%98%E6%8E%A5%E5%85%A5-stripe%E4%B8%BA%E4%BE%8B/">第三方支付接入(stripe为例)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2025 kkb<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
