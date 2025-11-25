@@ -14,7 +14,7 @@
 <meta property="og:description" content="1. 背景跟着团队去开发 AI 应用时，经常会遇到如下情景：  Prompt 一改，回答跑偏，纯黑盒，只能回滚； 用户投诉“变慢了”，却找不到是哪一次模型调用拖了后腿； 老板问“新模型效果真的更好吗？” 额，不知道。  直到把 Coze-Loop 加入到 Agent 中，终于实现了“像观测微服务一样观测 Agent”。 2. 是什么一句话：字节 2025.7 开源的 AI Agent 生命周期管理">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-11-25T06:56:06.000Z">
-<meta property="article:modified_time" content="2025-11-25T06:57:38.008Z">
+<meta property="article:modified_time" content="2025-11-25T09:14:06.279Z">
 <meta property="article:author" content="kkb">
 <meta property="article:tag" content="aigc">
 <meta name="twitter:card" content="summary">
@@ -148,13 +148,13 @@
 <p>支持 多模型并行对比（OpenAI&#x2F;Ark&#x2F;千帆&#x2F;通义&#x2F;Gemini&#x2F;Claude），一个输入六份输出，差异一眼可见 ；</p>
 <p>每次调试自动生成 语义哈希，相同 Prompt 只存一份快照，节省 60% 空间；</p>
 <p>一键“版本冻结”→ 生成 &#x2F;prompt&#x2F;v1.3.0 这样的只读端点，供线上服务通过 SDK 热加载，彻底告别“改完就回滚”。</p>
-<ol>
+<ol start="2">
 <li>系统化评测：让老板相信“新模型更好”</li>
 </ol>
 <p>数据集管理：支持 CSV、JSONL、飞书多维表，自动采样、去重、敏感词过滤；</p>
 <p>评估器工厂：内置 BLEU、ROUGE、BERTScore、LLM-as-Judge（用更强的模型给弱模型打分）；</p>
 <p>实验报告：自动计算↑↓变化率、p-value，红绿指标一键导出 PPT，老板再也不拍脑袋。</p>
-<ol>
+<ol start="3">
 <li>全链路 Trace：一次对话，一张瀑布图</li>
 </ol>
 <ul>
