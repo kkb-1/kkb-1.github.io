@@ -78,6 +78,89 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-githubFlow" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2025/04/04/githubFlow/" class="article-date">
+  <time class="dt-published" datetime="2025-04-04T14:18:42.000Z" itemprop="datePublished">2025-04-04</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2025/04/04/githubFlow/">githubFlow</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="1-githubflow有什么用"><a href="#1-githubflow有什么用" class="headerlink" title="1. githubflow有什么用"></a>1. githubflow有什么用</h2><p>githubflow是指github的工作流（详细可看github的Action选项）</p>
+<p>githubflow常用于：</p>
+<ul>
+<li>merge时，自动检测是否有错误</li>
+<li>merge时，自动打包镜像并部署（这个最厉害，自动化cicd）</li>
+</ul>
+<h2 id="1-语法"><a href="#1-语法" class="headerlink" title="1.语法"></a>1.语法</h2><p>使用的是yaml语法</p>
+<table>
+<thead>
+<tr>
+<th>关键字</th>
+<th>解释</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>name</td>
+<td>工作流名称</td>
+<td></td>
+</tr>
+<tr>
+<td>on</td>
+<td>在什么时候触发工作流</td>
+<td>看2.1</td>
+</tr>
+<tr>
+<td>jobs</td>
+<td>工作流具体内容</td>
+<td>看2.2</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>示例</p>
+</blockquote>
+<ul>
+<li>2.1</li>
+</ul>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">on</span>:</span><br><span class="line">  <span class="attr">push</span>: <span class="comment">//当进行push时</span></span><br><span class="line">    <span class="attr">branches</span>:[ <span class="string">&quot;master&quot;</span> ] <span class="comment">//push到分支master时</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>2.2</li>
+</ul>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">jobs</span>:</span><br><span class="line">  <span class="attr">build</span>: <span class="comment">//构建阶段</span></span><br><span class="line">    runs-<span class="attr">on</span>: ubuntu-latest <span class="comment">//使用ubuntu-latest镜像</span></span><br><span class="line">    </span><br><span class="line">    <span class="attr">steps</span>: <span class="comment">//后续步骤</span></span><br><span class="line">    - <span class="attr">uses</span>: action/checkout<span class="meta">@v3</span> <span class="comment">//使用该action库，actions/checkout 是一个官方提供的 GitHub Action，用于检查出代码。@v3 指定了动作的版本，这里使用的是版本 3</span></span><br><span class="line">    - <span class="attr">name</span>: (该过程的名称，自定义)</span><br><span class="line">      <span class="attr">run</span>: |  <span class="comment">//|用于表示准备多行字符串</span></span><br><span class="line">      （这里写一下自己的构建镜像的shell命令）</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://kkb-1.github.io/2025/04/04/githubFlow/" data-id="cm92vg6330000r5kdedg62rky" data-title="githubFlow" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cicd/" rel="tag">cicd</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-Go-pprof" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2024/09/22/Go-pprof/" class="article-date">
@@ -285,7 +368,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/aigc/" rel="tag">aigc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/backend/" rel="tag">backend</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cicd/" rel="tag">cicd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/aigc/" rel="tag">aigc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/aigc-backend/" rel="tag">aigc,backend</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/backend/" rel="tag">backend</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cicd/" rel="tag">cicd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a></li></ul>
     </div>
   </div>
 
@@ -295,7 +378,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/aigc/" style="font-size: 15px;">aigc</a> <a href="/tags/backend/" style="font-size: 20px;">backend</a> <a href="/tags/cicd/" style="font-size: 10px;">cicd</a> <a href="/tags/docker/" style="font-size: 15px;">docker</a>
+      <a href="/tags/aigc/" style="font-size: 15px;">aigc</a> <a href="/tags/aigc-backend/" style="font-size: 10px;">aigc,backend</a> <a href="/tags/backend/" style="font-size: 20px;">backend</a> <a href="/tags/cicd/" style="font-size: 10px;">cicd</a> <a href="/tags/docker/" style="font-size: 15px;">docker</a>
     </div>
   </div>
 
@@ -317,6 +400,10 @@
       <ul>
         
           <li>
+            <a href="/2025/11/26/%E5%9F%BA%E4%BA%8E-AGUI-%E5%92%8C-MCP-%E5%AE%9E%E7%8E%B0%E7%AB%AF-Tool/">基于 AGUI 和 MCP 实现端 Tool</a>
+          </li>
+        
+          <li>
             <a href="/2025/11/25/coze-loop/">coze loop</a>
           </li>
         
@@ -330,10 +417,6 @@
         
           <li>
             <a href="/2025/09/15/mcp-%E5%8D%8F%E8%AE%AE%E7%90%86%E8%A7%A3/">mcp 协议理解</a>
-          </li>
-        
-          <li>
-            <a href="/2025/04/04/%E5%A6%82%E4%BD%95%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B%E4%B8%80%E4%B8%AA%E9%A1%B9%E7%9B%AE%EF%BC%88%E5%90%8E%E7%AB%AF%EF%BC%89/">如何快速上手一个项目（后端）</a>
           </li>
         
       </ul>
