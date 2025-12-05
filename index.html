@@ -78,6 +78,77 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-减少工具-token-操作" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2025/12/05/%E5%87%8F%E5%B0%91%E5%B7%A5%E5%85%B7-token-%E6%93%8D%E4%BD%9C/" class="article-date">
+  <time class="dt-published" datetime="2025-12-05T14:48:37.000Z" itemprop="datePublished">2025-12-05</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2025/12/05/%E5%87%8F%E5%B0%91%E5%B7%A5%E5%85%B7-token-%E6%93%8D%E4%BD%9C/">减少工具 token 操作</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="1-背景"><a href="#1-背景" class="headerlink" title="1. 背景"></a>1. 背景</h1><p>我们知道，工具的定义和调用结果很“占 token”，一个工具还好，但是我们会用到的工具一般都很多，而且有时候不知道是要用哪个，很难按需使用，导致光是工具的定义就可以撑包上下文，以及对数据格式的规范定义边界模糊。</p>
+<p>但是 claude 为我们提供了 3 种解决思路（Tool Search Tool、Programmatic Tool Calling、Tool Use Examples）</p>
+<h1 id="2-Tool-Search-Tool"><a href="#2-Tool-Search-Tool" class="headerlink" title="2. Tool Search Tool"></a>2. Tool Search Tool</h1><p>针对「工具定义 token 爆炸」、「按需使用」痛点，claude 提供了 Tool Search Tool 的方案：</p>
+<ul>
+<li>提供的工具箱中，用<code>defer_loading: true</code>，在上下文中隐藏部分工具（这些工具一般是按需使用的工具，并不需要时时刻刻都加载入上下文）</li>
+<li><code>defer_loading: false</code>：不需要隐藏的工具，也就是常用的小工具，可以一开始就载入上下文中</li>
+</ul>
+<h2 id="2-1-如何让隐藏的工具按需载入？"><a href="#2-1-如何让隐藏的工具按需载入？" class="headerlink" title="2.1. 如何让隐藏的工具按需载入？"></a>2.1. 如何让隐藏的工具按需载入？</h2><p>工具箱中有一个小工具，它的功能是模糊匹配查找需要的工具。</p>
+<p>这么说应该就比较懂了。</p>
+<p>举例：claude 发现自己可能需要用到 github 相关的工具，那么他就会用这个查找小工具，查找 github ，小工具会去工具箱中找 github 关键词匹配的工具出来给 claude 使用。</p>
+<h1 id="3-Programmatic-Tool-Calling"><a href="#3-Programmatic-Tool-Calling" class="headerlink" title="3. Programmatic Tool Calling"></a>3. Programmatic Tool Calling</h1><p>针对「工具调用结果 token 爆炸」痛点，采取了以下方案：</p>
+<ul>
+<li>Claude 通过编写脚本去编排和调用工具，并控制最终结果输出的内容格式。</li>
+<li>Claude 只会看到了脚本处理后的结果，而不是完整的工具调用结果，抛弃了无用的信息，减少了 token</li>
+<li>Claude 从始至终都是在进行沙盒操作</li>
+</ul>
+<h1 id="4-Tool-Use-Examples"><a href="#4-Tool-Use-Examples" class="headerlink" title="4. Tool Use Examples"></a>4. Tool Use Examples</h1><p>针对「数据格式的规范定义边界模糊」的情况，claude 也有提供方案，不过在此之前，先解释一下，为什么要关心这个边界模糊问题。</p>
+<h2 id="4-1-格式边界模糊会带来的问题"><a href="#4-1-格式边界模糊会带来的问题" class="headerlink" title="4.1. 格式边界模糊会带来的问题"></a>4.1. 格式边界模糊会带来的问题</h2><p>假设工具的响应结果中有时间，那么，这个是“2024-11-06”、“Nov 6， 2024”还是“2024-11-06T00：00：00Z”？</p>
+<p>这种歧义可能会影响 claude 的脚本的中间处理过程，导致 claude 最终得到的结果出现偏差，并且由于脚本沙盒的原因， claude 无法确认这个结果是否发生偏差了。</p>
+<h2 id="4-2-具体方案"><a href="#4-2-具体方案" class="headerlink" title="4.2. 具体方案"></a>4.2. 具体方案</h2><p>以下是示例：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;create_ticket&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;input_schema&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span> <span class="comment">/* same schema as above */</span> <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;input_examples&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">      <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;title&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Login page returns 500 error&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;priority&quot;</span><span class="punctuation">:</span> <span class="string">&quot;critical&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;labels&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;bug&quot;</span><span class="punctuation">,</span> <span class="string">&quot;authentication&quot;</span><span class="punctuation">,</span> <span class="string">&quot;production&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;reporter&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;id&quot;</span><span class="punctuation">:</span> <span class="string">&quot;USR-12345&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Jane Smith&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;contact&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;email&quot;</span><span class="punctuation">:</span> <span class="string">&quot;jane@acme.com&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;phone&quot;</span><span class="punctuation">:</span> <span class="string">&quot;+1-555-0123&quot;</span></span><br><span class="line">          <span class="punctuation">&#125;</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;due_date&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2024-11-06&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;escalation&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;level&quot;</span><span class="punctuation">:</span> <span class="number">2</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;notify_manager&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;sla_hours&quot;</span><span class="punctuation">:</span> <span class="number">4</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">      <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;title&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Add dark mode support&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;labels&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;feature-request&quot;</span><span class="punctuation">,</span> <span class="string">&quot;ui&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;reporter&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;id&quot;</span><span class="punctuation">:</span> <span class="string">&quot;USR-67890&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Alex Chen&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">      <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;title&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Update API documentation&quot;</span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">]</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>通过 <code>input_examples</code>可以让 claude 知道数据格式具体是什么样的</p>
+<h1 id="5-并不是-3-种方案都必须严格执行"><a href="#5-并不是-3-种方案都必须严格执行" class="headerlink" title="5. 并不是 3 种方案都必须严格执行"></a>5. 并不是 3 种方案都必须严格执行</h1><p>刚刚提到的 3 种方案并不代表一定要无时无刻都要实现，仅当你需要的时候才去采取这个方案。</p>
+<ul>
+<li>工具搜索工具的上下文膨胀 → Tool Search Tool</li>
+<li>大型中间结果污染上下文 → Programmatic Tool Calling</li>
+<li>参数错误和错误调用 → Tool Use Examples</li>
+</ul>
+<p>不然你会很麻烦，比如Tool Use Examples，如果所有工具都要提供例子，那 token 一样会爆炸，仅仅当你需要举例让 claude 排除歧义的时候使用。</p>
+<h1 id="6-参考文献"><a href="#6-参考文献" class="headerlink" title="6. 参考文献"></a>6. 参考文献</h1><p><a target="_blank" rel="noopener" href="https://www.anthropic.com/engineering/advanced-tool-use">https://www.anthropic.com/engineering/advanced-tool-use</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://kkb-1.github.io/2025/12/05/%E5%87%8F%E5%B0%91%E5%B7%A5%E5%85%B7-token-%E6%93%8D%E4%BD%9C/" data-id="cmiszeshn00001kkdhrbfawpg" data-title="减少工具 token 操作" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ai%E6%8F%90%E6%95%88/" rel="tag">ai提效</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-基于-AGUI-和-MCP-实现端-Tool" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2025/11/26/%E5%9F%BA%E4%BA%8E-AGUI-%E5%92%8C-MCP-%E5%AE%9E%E7%8E%B0%E7%AB%AF-Tool/" class="article-date">
@@ -985,56 +1056,6 @@
 
 
   
-    <article id="post-docker-load-与-docker-pull" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2025/04/04/docker-load-%E4%B8%8E-docker-pull/" class="article-date">
-  <time class="dt-published" datetime="2025-04-04T14:21:51.000Z" itemprop="datePublished">2025-04-04</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2025/04/04/docker-load-%E4%B8%8E-docker-pull/">docker load 与 docker pull</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p>最近发现一种很奇葩的情况：</p>
-<p>A机push镜像a（版本：0.0.0，hash值：a）到harbor</p>
-<p>A机修改了a的容器并commit了镜像b（版本：0.0.0，hash值：b）</p>
-<p>A机push镜像b上harbor</p>
-<p>A机 save镜像a成tar包并通过USB直接传给B机</p>
-<p>B机load tar包得到镜像a（版本号：0.0.0，hash值：a）</p>
-<p>B机pull harbor上版本号为0.0.0的镜像</p>
-<p>发现B机全部层重拉</p>
-<p>B机pull harbor上hash为a的镜像，不用重拉</p>
-<p>但是，dockerHub完全没有以上问题，区别就在于，dockerHub和harbor的存储结构不一样，harbor有一个镜像层标识，docker save会抹除这个标识，导致无法识别</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://kkb-1.github.io/2025/04/04/docker-load-%E4%B8%8E-docker-pull/" data-id="cm92vnreh0000t7kd3mbq479e" data-title="docker load 与 docker pull" class="article-share-link"><span class="fa fa-share">分享</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/" rel="tag">docker</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
 
 
   <nav id="page-nav">
@@ -1053,7 +1074,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/aigc/" rel="tag">aigc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/aigc-backend/" rel="tag">aigc backend</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/backend/" rel="tag">backend</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cicd/" rel="tag">cicd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/aigc/" rel="tag">aigc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/aigc-backend/" rel="tag">aigc backend</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ai%E6%8F%90%E6%95%88/" rel="tag">ai提效</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/backend/" rel="tag">backend</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cicd/" rel="tag">cicd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a></li></ul>
     </div>
   </div>
 
@@ -1063,7 +1084,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/aigc/" style="font-size: 15px;">aigc</a> <a href="/tags/aigc-backend/" style="font-size: 10px;">aigc backend</a> <a href="/tags/backend/" style="font-size: 20px;">backend</a> <a href="/tags/cicd/" style="font-size: 10px;">cicd</a> <a href="/tags/docker/" style="font-size: 15px;">docker</a>
+      <a href="/tags/aigc/" style="font-size: 15px;">aigc</a> <a href="/tags/aigc-backend/" style="font-size: 10px;">aigc backend</a> <a href="/tags/ai%E6%8F%90%E6%95%88/" style="font-size: 10px;">ai提效</a> <a href="/tags/backend/" style="font-size: 20px;">backend</a> <a href="/tags/cicd/" style="font-size: 10px;">cicd</a> <a href="/tags/docker/" style="font-size: 15px;">docker</a>
     </div>
   </div>
 
@@ -1072,7 +1093,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/11/">十一月 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/10/">十月 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/09/">九月 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/04/">四月 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/09/">九月 2024</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/12/">十二月 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/11/">十一月 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/10/">十月 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/09/">九月 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/04/">四月 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/09/">九月 2024</a></li></ul>
     </div>
   </div>
 
@@ -1083,6 +1104,10 @@
     <h3 class="widget-title">最新文章</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2025/12/05/%E5%87%8F%E5%B0%91%E5%B7%A5%E5%85%B7-token-%E6%93%8D%E4%BD%9C/">减少工具 token 操作</a>
+          </li>
         
           <li>
             <a href="/2025/11/26/%E5%9F%BA%E4%BA%8E-AGUI-%E5%92%8C-MCP-%E5%AE%9E%E7%8E%B0%E7%AB%AF-Tool/">基于 AGUI 和 MCP 实现端 Tool</a>
@@ -1098,10 +1123,6 @@
         
           <li>
             <a href="/2025/10/27/AI-%E4%B8%8A%E4%B8%8B%E6%96%87%E5%B7%A5%E7%A8%8B/">AI 上下文工程</a>
-          </li>
-        
-          <li>
-            <a href="/2025/09/15/mcp-%E5%8D%8F%E8%AE%AE%E7%90%86%E8%A7%A3/">mcp 协议理解</a>
           </li>
         
       </ul>
